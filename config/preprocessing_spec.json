@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "experiment": "mainline_single_output_v1",
+  "description": "Documented effective image preprocessing settings; the verification archive does not execute a raw-image training pipeline.",
+  "views": ["side", "top"],
+  "input": {"color_conversion": "RGB", "pixel_encoding": "8-bit unsigned integer", "tensor_layout": "C,H,W"},
+  "geometric_preprocessing": {
+    "order": ["RGB conversion", "configured tilt correction if nonzero", "configured ROI crop", "resize"],
+    "rotation": {"expand": true, "resampling": "PIL.Image.BICUBIC", "fill_rgb": [128, 128, 128]},
+    "roi": "Deterministic per-experiment and per-view crop; only the ROI heights required for the selected distance samples are supplied in this archive.",
+    "resize_height_width": [224, 224],
+    "resize_interpolation": "bilinear",
+    "resize_antialias": true
+  },
+  "normalization": {
+    "channel_order": ["R", "G", "B"],
+    "pixel_divisor": 255.0,
+    "mean": [0.485, 0.456, 0.406],
+    "std": [0.229, 0.224, 0.225],
+    "formula": "(uint8_pixel / 255.0 - mean[channel]) / std[channel]",
+    "constant_source": "Fixed ImageNet constants, not statistics fitted to the study images",
+    "shared_across_views": true,
+    "shared_across_train_validation_test": true,
+    "standardized_output_bounded_to_0_1": false
+  },
+  "training_transform_order": ["resize", "horizontal_flip", "rand_augment", "to_tensor_divide_255", "channel_normalization", "random_erasing"],
+  "training_augmentation": {
+    "horizontal_flip": {"p": 0.5},
+    "vertical_flip": {"enabled": false},
+    "rand_augment": {
+      "pipeline_applied_each_training_image": true,
+      "num_ops": 2,
+      "magnitude_index": 9,
+      "num_magnitude_bins": 31,
+      "operation_sampling": "Uniform with replacement; two sequential draws; repeated operations and Identity are possible",
+      "operation_pool": ["Identity", "ShearX", "ShearY", "TranslateX", "TranslateY", "Rotate", "Brightness", "Color", "Contrast", "Sharpness", "Posterize", "Solarize", "AutoContrast", "Equalize"],
+      "interpolation": "nearest",
+      "fill": null,
+      "brightness_contrast_each_per_draw_probability": "1/14",
+      "brightness_contrast_each_probability_at_least_once": "27/196",
+      "brightness_and_contrast_both_selected_probability": "2/196",
+      "brightness_contrast_factor_each_selection_approx": [0.73, 1.27],
+      "factor_sign_probabilities": [0.5, 0.5],
+      "probability_note": "Theoretical selection probabilities from the implementation, not empirical frequencies measured in training logs"
+    },
+    "standalone_color_jitter": {"enabled": false},
+    "standalone_additive_gaussian_noise": {"enabled": false},
+    "random_erasing": {
+      "p": 0.3,
+      "scale_area_fraction": [0.02, 0.15],
+      "area_sampling": "uniform",
+      "aspect_ratio": [0.3, 3.3],
+      "aspect_ratio_sampling": "log-uniform",
+      "value": "random",
+      "replacement_distribution": "Independent standard-normal values within the sampled rectangle",
+      "replacement_space": "After channel normalization",
+      "candidate_attempts": 10,
+      "if_no_valid_rectangle": "Keep the image unchanged",
+      "p_note": "0.3 is the attempt probability; failure to find a valid rectangle can leave the image unchanged"
+    },
+    "view_randomness": "The same transform composition is invoked separately for side and top images; random parameters are not synchronized"
+  },
+  "validation_test_transform_order": ["deterministic_RGB_tilt_ROI", "resize", "to_tensor_divide_255", "channel_normalization"],
+  "validation_test_random_augmentation": false,
+  "implementation_version_evidence": {
+    "torch": "2.9.1+cu128",
+    "torchvision": "0.24.1+cu128",
+    "meaning": "Versions recorded in the original-environment verification records and inspected in the available environment; this archive does not replay historical training",
+    "package_runtime_requirement": "Python 3.9+ standard library only; PyTorch and torchvision are not required to run the CSV/coordinate checks"
+  },
+  "configuration_wiring": "The archived data-loader factory forwarded image size but used the transform function defaults for advanced augmentation and normalization; this specification documents effective behavior rather than assuming every YAML field was consumed.",
+  "historical_limit": "Per-image augmentation draws were not recorded and are not reconstructed by this archive. Geometric RandAugment operations can alter spatial structure; no invariance guarantee is made."
+}

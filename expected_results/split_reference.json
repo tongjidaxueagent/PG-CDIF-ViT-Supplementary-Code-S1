@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "total_samples": 8985,
+  "total_groups": 15,
+  "samples_per_group": 599,
+  "frame_index_min": 1,
+  "frame_index_max": 599,
+  "split_group_counts": {
+    "train": 12,
+    "val": 1,
+    "test": 2
+  },
+  "split_sample_counts": {
+    "train": 7188,
+    "val": 599,
+    "test": 1198
+  },
+  "group_assignments": {
+    "1000NTU_10": "train",
+    "1000NTU_50": "train",
+    "1000NTU_100": "train",
+    "1000NTU_150": "test",
+    "1000NTU_200": "train",
+    "10000NTU_10": "train",
+    "10000NTU_50": "train",
+    "10000NTU_100": "val",
+    "10000NTU_150": "train",
+    "10000NTU_200": "train",
+    "20000NTU_10": "train",
+    "20000NTU_50": "train",
+    "20000NTU_100": "train",
+    "20000NTU_150": "train",
+    "20000NTU_200": "test"
+  },
+  "group_sample_counts": {
+    "1000NTU_10": 599,
+    "1000NTU_50": 599,
+    "1000NTU_100": 599,
+    "1000NTU_150": 599,
+    "1000NTU_200": 599,
+    "10000NTU_10": 599,
+    "10000NTU_50": 599,
+    "10000NTU_100": 599,
+    "10000NTU_150": 599,
+    "10000NTU_200": 599,
+    "20000NTU_10": 599,
+    "20000NTU_50": 599,
+    "20000NTU_100": 599,
+    "20000NTU_150": 599,
+    "20000NTU_200": 599
+  },
+  "identity": [
+    "experiment_group",
+    "frame_index"
+  ],
+  "normalization": "The original timestamp is released as frame_index; all 7188 original blank split values are train and agree with the source group manifest and formal YAML. No rows are dropped.",
+  "provenance": {
+    "predictions": {
+      "file": "v1_all_predictions.csv",
+      "sha256": "69cc584e044efd85b34f7a3ae1fe4bd2bed4e51bc78db2087a133d45087635fd"
+    },
+    "group_manifest": {
+      "file": "fig_4-1_dataset_split_vertical_current_source.csv",
+      "sha256": "6a644785e52fa7ba085a19e22328caa66824568cec690a7da7a9a4bc9fc20bbf"
+    },
+    "split_config": {
+      "file": "train_config_mainline_single_output_v1.yaml",
+      "sha256": "ee4eee20efe1e244f2f9afc618ede1e46fc286411700b0a5e08e293c8a12f3b0"
+    }
+  }
+}

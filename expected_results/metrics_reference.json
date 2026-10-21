@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "definitions": {
+    "ntu_mae": "mean(abs(pred_ntu - target_ntu))",
+    "ntu_rmse": "sqrt(mean((pred_ntu - target_ntu)^2))",
+    "split_ntu_mape": "mean(min(abs(pred_ntu-target_ntu)/(target_ntu+1)*100, 1000)); cap each percentage before averaging",
+    "group_ntu_mape": "mean(abs(pred_ntu-target_ntu)/(target_ntu+1)*100); uncapped convention specified by the current source",
+    "archived_group_zero_offset_mape_diagnostic": "mean(abs(pred_ntu-target_ntu)/target_ntu*100); uncapped, separate from the released target+1 group MAPE",
+    "r2": "1 - sum((target_ntu-pred_ntu)^2)/sum((target_ntu-mean(target_ntu))^2); historical constant-target convention returns 1 when denominator is zero"
+  },
+  "numeric_scope": "Recompute from the released NTU values using Python binary64 and math.fsum. No log-space transformation, training, or inference is performed.",
+  "reference_roles": {
+    "historical_float32_split_metrics": "Independent original stage1_best_metrics.json values for validation and test only. Its float32 transformations/reductions differ slightly from aggregation of the exported NTU columns.",
+    "archived_table_float64_split_metrics": "Independent archived all-split figure-source summary table: MAE and RMSE for train, validation, and test. This is not a claim about the paper's published full-precision values.",
+    "archived_zero_offset_group_metrics": "Independent original val_group_summary.csv and test_group_summary.csv MAE and MAPE for the three held-out groups. The archived MAPE numerically matches a target-only denominator (zero offset), although the current archived evaluation source specifies target+1. The producing code version is not established. These values are checked as a separate zero-offset diagnostic and are not asserted to equal the released target+1 group MAPE.",
+    "exported_float64_split_metrics": "Frozen recalculation from the minimized prediction export; a regression reference, not an independent historical stage1 result. Train MAPE and R2 have this role only.",
+    "exported_float64_group_metrics": "Frozen target+1, uncapped per-group recalculation from the minimized prediction export; a regression reference. Archived group MAE and zero-offset MAPE diagnostics are checked separately where available."
+  },
+  "historical_absolute_tolerance": {
+    "ntu_mae": 1e-06,
+    "ntu_rmse": 1e-05,
+    "ntu_mape": 2e-06,
+    "r2": 2e-08
+  },
+  "historical_relative_tolerance": 0.0,
+  "historical_tolerance_rationale": "Absolute tolerances were set after observing the differences shown below: MAE 1e-6 NTU, RMSE 1e-5 NTU, MAPE 2e-6 percentage points, R2 2e-8. These are narrow rounding allowances, not percentage tolerances.",
+  "observed_export_vs_historical_absolute_differences": {
+    "val": {
+      "ntu_mae": 5.206202047247643e-07,
+      "ntu_rmse": 3.654136889963411e-06,
+      "ntu_mape": 1.1810669100498217e-06,
+      "r2": 5.463431707042332e-09
+    },
+    "test": {
+      "ntu_mae": 5.89877018342122e-07,
+      "ntu_rmse": 6.921735632658965e-06,
+      "ntu_mape": 1.4663058358621583e-06,
+      "r2": 1.187998666107859e-08
+    }
+  },
+  "float64_absolute_tolerance": 1e-09,
+  "float64_relative_tolerance": 1e-12,
+  "historical_float32_split_metrics": {
+    "val": {
+      "ntu_mae": 46.99896240234375,
+      "ntu_rmse": 163.68426513671875,
+      "ntu_mape": 16.196399688720703,
+      "r2": 0.9658011794090271
+    },
+    "test": {
+      "ntu_mae": 46.52556610107422,
+      "ntu_rmse": 130.71157836914062,
+      "ntu_mape": 19.336572647094727,
+      "r2": 0.9249392747879028
+    }
+  },
+  "archived_table_float64_split_metrics": {
+    "train": {
+      "ntu_mae": 367.32215867582534,
+      "ntu_rmse": 1172.697557437525
+    },
+    "val": {
+      "ntu_mae": 46.998961881723545,
+      "ntu_rmse": 163.68426148258183
+    },
+    "test": {
+      "ntu_mae": 46.5255655111972,
+      "ntu_rmse": 130.71157144740502
+    }
+  },
+  "archived_zero_offset_group_metrics": {
+    "10000NTU_100": {
+      "ntu_mae": 46.998961881723545,
+      "ntu_mape_zero_offset": 16.85933245539438
+    },
+    "1000NTU_150": {
+      "ntu_mae": 43.18811271266269,
+      "ntu_mape_zero_offset": 23.82656369216231
+    },
+    "20000NTU_200": {
+      "ntu_mae": 49.863018309731714,
+      "ntu_mape_zero_offset": 15.803502797665514
+    }
+  },
+  "exported_float64_split_metrics": {
+    "train": {
+      "ntu_mae": 367.32215867582534,
+      "ntu_rmse": 1172.697557437525,
+      "ntu_mape": 30.018323062258435,
+      "r2": 0.8373471912528544
+    },
+    "val": {
+      "ntu_mae": 46.998961881723545,
+      "ntu_rmse": 163.68426148258186,
+      "ntu_mape": 16.196400869787613,
+      "r2": 0.9658011739455954
+    },
+    "test": {
+      "ntu_mae": 46.5255655111972,
+      "ntu_rmse": 130.711571447405,
+      "ntu_mape": 19.33657118078889,
+      "r2": 0.9249392866678895
+    }
+  },
+  "exported_float64_group_metrics": {
+    "1000NTU_10": {
+      "ntu_mae": 47.42899676276766,
+      "ntu_rmse": 75.58577061798265,
+      "ntu_mape": 37.46864969127855,
+      "r2": 0.8827038949968471
+    },
+    "1000NTU_50": {
+      "ntu_mae": 31.548996974709436,
+      "ntu_rmse": 67.84110104476703,
+      "ntu_mape": 31.90736174001283,
+      "r2": 0.882078819215887
+    },
+    "1000NTU_100": {
+      "ntu_mae": 38.66464915856694,
+      "ntu_rmse": 75.46415499745902,
+      "ntu_mape": 37.46433360124658,
+      "r2": 0.8906609985349991
+    },
+    "1000NTU_150": {
+      "ntu_mae": 43.18811271266269,
+      "ntu_rmse": 112.29396201381553,
+      "ntu_mape": 23.196406768057717,
+      "r2": 0.7438174187064434
+    },
+    "1000NTU_200": {
+      "ntu_mae": 27.126868668303068,
+      "ntu_rmse": 67.63015409965077,
+      "ntu_mape": 21.263981559483593,
+      "r2": 0.8896983617239311
+    },
+    "10000NTU_10": {
+      "ntu_mae": 291.46467625995314,
+      "ntu_rmse": 640.566421077173,
+      "ntu_mape": 21.95821327002919,
+      "r2": 0.8560012451582332
+    },
+    "10000NTU_50": {
+      "ntu_mae": 156.83610894962624,
+      "ntu_rmse": 382.71074831043336,
+      "ntu_mape": 23.26680931310741,
+      "r2": 0.9014302518811202
+    },
+    "10000NTU_100": {
+      "ntu_mae": 46.998961881723545,
+      "ntu_rmse": 163.68426148258186,
+      "ntu_mape": 16.196400869787613,
+      "r2": 0.9658011739455954
+    },
+    "10000NTU_150": {
+      "ntu_mae": 38.64692400293875,
+      "ntu_rmse": 149.3636280952815,
+      "ntu_mape": 21.710918857941262,
+      "r2": 0.9625249391084584
+    },
+    "10000NTU_200": {
+      "ntu_mae": 102.84748284526182,
+      "ntu_rmse": 272.38388379149814,
+      "ntu_mape": 31.25362277651257,
+      "r2": 0.8761494554591376
+    },
+    "20000NTU_10": {
+      "ntu_mae": 2621.323118079286,
+      "ntu_rmse": 3451.5474856794262,
+      "ntu_mape": 28.83755529562324,
+      "r2": 0.5561054918816773
+    },
+    "20000NTU_50": {
+      "ntu_mae": 740.3349961486205,
+      "ntu_rmse": 1905.2563260623895,
+      "ntu_mape": 36.02124581446351,
+      "r2": 0.7522326520627911
+    },
+    "20000NTU_100": {
+      "ntu_mae": 187.22306131480732,
+      "ntu_rmse": 444.99755060328215,
+      "ntu_mape": 33.237275199136576,
+      "r2": 0.9486668261358356
+    },
+    "20000NTU_150": {
+      "ntu_mae": 124.42002494506326,
+      "ntu_rmse": 295.88945625117987,
+      "ntu_mape": 35.829909628265874,
+      "r2": 0.8179096835598751
+    },
+    "20000NTU_200": {
+      "ntu_mae": 49.863018309731714,
+      "ntu_rmse": 146.83697053446684,
+      "ntu_mape": 15.476735593520061,
+      "r2": 0.9460291562500152
+    }
+  },
+  "provenance": {
+    "predictions": {
+      "file": "v1_all_predictions.csv",
+      "sha256": "69cc584e044efd85b34f7a3ae1fe4bd2bed4e51bc78db2087a133d45087635fd"
+    },
+    "historical_split_metrics": {
+      "file": "stage1_best_metrics.json",
+      "sha256": "991ea376ed419e93ff6bbd3c050be47e98d9f143d1cdd28e05d0b312ff446801"
+    },
+    "historical_val_group_metrics": {
+      "file": "val_group_summary.csv",
+      "sha256": "47081f8759438d3dffcb4480b3a71ee0a4c4754332569668932a613ef3967e25"
+    },
+    "historical_test_group_metrics": {
+      "file": "test_group_summary.csv",
+      "sha256": "4ce765617a7f9c0be44b877d061b12e34590952148dbd6d2c01511d2523a559b"
+    },
+    "archived_table_split_summary": {
+      "file": "fig_4-5_main_model_allsplit_scatter_residual_split_metrics.csv",
+      "sha256": "d8bffa458aac991bda80d774c1f761b12dc830950e56a9734afdbdfd7921bb00"
+    },
+    "historical_metric_definition": {
+      "file": "metrics.py",
+      "sha256": "7a862459d85ee1466f37e35b26b9070e9ea6563914d511f45061c9df091524da"
+    },
+    "historical_group_metric_definition": {
+      "file": "evaluate_mainline_trial.py",
+      "sha256": "e70df53fe580b7b24ba3bb1b1745bf1763f8c378332356eb847309d16978021f"
+    }
+  }
+}

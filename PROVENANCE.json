@@ -1,0 +1,261 @@
+{
+  "package": "Supplementary Code S1",
+  "version": "1.0.0",
+  "prepared_date": "2026-10-05",
+  "purpose": "Curated saved-output verification; input provenance is documented, not independently established by a checksum.",
+  "mainline_experiment": "mainline_single_output_v1",
+  "mainline_prediction_sources": {
+    "predictions": {
+      "file": "v1_all_predictions.csv",
+      "sha256": "69cc584e044efd85b34f7a3ae1fe4bd2bed4e51bc78db2087a133d45087635fd"
+    },
+    "fallback_predictions": {
+      "file": "v1_all_predictions.csv",
+      "sha256": "69cc584e044efd85b34f7a3ae1fe4bd2bed4e51bc78db2087a133d45087635fd"
+    },
+    "group_manifest": {
+      "file": "fig_4-1_dataset_split_vertical_current_source.csv",
+      "sha256": "6a644785e52fa7ba085a19e22328caa66824568cec690a7da7a9a4bc9fc20bbf"
+    },
+    "split_config": {
+      "file": "train_config_mainline_single_output_v1.yaml",
+      "sha256": "ee4eee20efe1e244f2f9afc618ede1e46fc286411700b0a5e08e293c8a12f3b0"
+    },
+    "historical_split_metrics": {
+      "file": "stage1_best_metrics.json",
+      "sha256": "991ea376ed419e93ff6bbd3c050be47e98d9f143d1cdd28e05d0b312ff446801"
+    },
+    "historical_val_group_metrics": {
+      "file": "val_group_summary.csv",
+      "sha256": "47081f8759438d3dffcb4480b3a71ee0a4c4754332569668932a613ef3967e25"
+    },
+    "historical_test_group_metrics": {
+      "file": "test_group_summary.csv",
+      "sha256": "4ce765617a7f9c0be44b877d061b12e34590952148dbd6d2c01511d2523a559b"
+    },
+    "archived_table_split_summary": {
+      "file": "fig_4-5_main_model_allsplit_scatter_residual_split_metrics.csv",
+      "sha256": "d8bffa458aac991bda80d774c1f761b12dc830950e56a9734afdbdfd7921bb00"
+    },
+    "historical_metric_definition": {
+      "file": "metrics.py",
+      "sha256": "7a862459d85ee1466f37e35b26b9070e9ea6563914d511f45061c9df091524da"
+    },
+    "historical_group_metric_definition": {
+      "file": "evaluate_mainline_trial.py",
+      "sha256": "e70df53fe580b7b24ba3bb1b1745bf1763f8c378332356eb847309d16978021f"
+    }
+  },
+  "mainline_prediction_curation": {
+    "predictions": "Only experiment_group, timestamp, split, pred_ntu, target_ntu are selected. timestamp is renamed frame_index. All other prediction columns are omitted. Numeric prediction/target strings and original row order are retained. The 7188 blank split cells become train after checking both original group manifest and formal YAML held-out lists.",
+    "manifest": "Only experiment_group, split, samples are selected; all 15 original groups are retained.",
+    "historical_references": "Validation and test NTU MAE/RMSE/MAPE/R2 values are copied directly from original stage1_best_metrics.json. Archived group MAE and MAPE come from val/test group summary CSVs. The archived group MAPE numerically matches zero denominator offset, while the current evaluation source specifies +1; the producing code version is not established. It is verified as a separate diagnostic, not as the released +1 group MAPE. Train MAE/RMSE are also anchored to the archived figure-source split metrics table; train MAPE/R2 are derived export regression checks only.",
+    "public_data_scope": "The mainline prediction CSV contains only group, frame, split, predicted NTU and reference NTU; the separate attention-distance CSV contains the selected coordinates required for that check."
+  },
+  "mainline_source_rows": 8985,
+  "blank_split_cells_assigned_to_verified_train_groups": 7188,
+  "mainline_primary_and_archived_copy_identical": true,
+  "mainline_reference_differences_and_tolerances": {
+    "absolute_differences": {
+      "val": {
+        "ntu_mae": 5.206202047247643e-07,
+        "ntu_rmse": 3.654136889963411e-06,
+        "ntu_mape": 1.1810669100498217e-06,
+        "r2": 5.463431707042332e-09
+      },
+      "test": {
+        "ntu_mae": 5.89877018342122e-07,
+        "ntu_rmse": 6.921735632658965e-06,
+        "ntu_mape": 1.4663058358621583e-06,
+        "r2": 1.187998666107859e-08
+      }
+    },
+    "absolute_tolerances": {
+      "ntu_mae": 1e-06,
+      "ntu_rmse": 1e-05,
+      "ntu_mape": 2e-06,
+      "r2": 2e-08
+    }
+  },
+  "attention_distance_sources": [
+    {
+      "role": "summary",
+      "file": "attention_rollout_sample_summary_v1.csv",
+      "sha256": "e4de3b1f71f633a53151a7725602386b09ca47a6b5637b06be4ed2356799604c"
+    },
+    {
+      "role": "labels",
+      "file": "labels_interface_trial.csv",
+      "sha256": "b9ebd2b70f6c64ab816cd54acd62cdd5846caa937cf7574a75eede7e799e1900"
+    },
+    {
+      "role": "crop",
+      "file": "crop_params.json",
+      "sha256": "e1518ee19ac5c0830c09b34d436855468623814c612207729a87a2e855ce3a6d"
+    },
+    {
+      "role": "splits",
+      "file": "fig_4-1_dataset_split_vertical_current_source.csv",
+      "sha256": "6a644785e52fa7ba085a19e22328caa66824568cec690a7da7a9a4bc9fc20bbf"
+    },
+    {
+      "role": "aggregate_reference",
+      "file": "verification_result.json",
+      "sha256": "3abd8a49bd842e86186be5007fe50d0049af35230da88a623822fa454fdca855"
+    },
+    {
+      "role": "previous_verifier",
+      "file": "verify_normalization.py",
+      "sha256": "0f53e61125972d62eb2f53117655bb1edb366060e0260172e905cad65cf3131a"
+    }
+  ],
+  "attention_distance_source_copy_hashes_match": true,
+  "attention_distance_curation": {
+    "label_source_rows": 8985,
+    "summary_source_rows": 18,
+    "curated_side_rows": 9,
+    "group_source_label_counts": {
+      "1000NTU_150": 599,
+      "10000NTU_100": 599,
+      "20000NTU_200": 599
+    },
+    "frame_selection": "sort timestamp numerically, select round((599-1)*fraction) indices 60,299,538 -> frame IDs 61,300,539",
+    "excluded": "All top-view rows, unselected labels, local image paths, model code, model weights, and images.",
+    "field_mapping": {
+      "group": "summary.experiment_group",
+      "split": "split table.split",
+      "frame_index": "labels.timestamp = summary.timestamp",
+      "peak_row": "int(summary.peak_y_norm * 223), exactly integral for all nine rows",
+      "interface_position_pixels": "labels.interface_y_pixel, original CSV text preserved",
+      "roi_height": "crop.by_experiment[group].side.height",
+      "saved_peak_y_norm": "summary.peak_y_norm",
+      "saved_interface_y_norm": "summary.interface_y_norm",
+      "saved_distance": "summary.peak_interface_abs_delta"
+    }
+  },
+  "attention_distance_original_row_mapping": [
+    {
+      "sample_id": "1000NTU_150_side_61",
+      "source_label_csv_line": 4255,
+      "source_summary_csv_line": 2,
+      "sorted_zero_based_index": 60,
+      "fraction": 0.1,
+      "source_frame_index": 61,
+      "peak_product_saved_norm_times_223": 221.0,
+      "peak_recovery_exactly_integral": true,
+      "roi_json_pointer": "/by_experiment/1000NTU_150/side/height"
+    },
+    {
+      "sample_id": "1000NTU_150_side_300",
+      "source_label_csv_line": 4494,
+      "source_summary_csv_line": 4,
+      "sorted_zero_based_index": 299,
+      "fraction": 0.5,
+      "source_frame_index": 300,
+      "peak_product_saved_norm_times_223": 165.0,
+      "peak_recovery_exactly_integral": true,
+      "roi_json_pointer": "/by_experiment/1000NTU_150/side/height"
+    },
+    {
+      "sample_id": "1000NTU_150_side_539",
+      "source_label_csv_line": 4733,
+      "source_summary_csv_line": 6,
+      "sorted_zero_based_index": 538,
+      "fraction": 0.9,
+      "source_frame_index": 539,
+      "peak_product_saved_norm_times_223": 221.0,
+      "peak_recovery_exactly_integral": true,
+      "roi_json_pointer": "/by_experiment/1000NTU_150/side/height"
+    },
+    {
+      "sample_id": "10000NTU_100_side_61",
+      "source_label_csv_line": 661,
+      "source_summary_csv_line": 8,
+      "sorted_zero_based_index": 60,
+      "fraction": 0.1,
+      "source_frame_index": 61,
+      "peak_product_saved_norm_times_223": 221.0,
+      "peak_recovery_exactly_integral": true,
+      "roi_json_pointer": "/by_experiment/10000NTU_100/side/height"
+    },
+    {
+      "sample_id": "10000NTU_100_side_300",
+      "source_label_csv_line": 900,
+      "source_summary_csv_line": 10,
+      "sorted_zero_based_index": 299,
+      "fraction": 0.5,
+      "source_frame_index": 300,
+      "peak_product_saved_norm_times_223": 221.0,
+      "peak_recovery_exactly_integral": true,
+      "roi_json_pointer": "/by_experiment/10000NTU_100/side/height"
+    },
+    {
+      "sample_id": "10000NTU_100_side_539",
+      "source_label_csv_line": 1139,
+      "source_summary_csv_line": 12,
+      "sorted_zero_based_index": 538,
+      "fraction": 0.9,
+      "source_frame_index": 539,
+      "peak_product_saved_norm_times_223": 200.0,
+      "peak_recovery_exactly_integral": true,
+      "roi_json_pointer": "/by_experiment/10000NTU_100/side/height"
+    },
+    {
+      "sample_id": "20000NTU_200_side_61",
+      "source_label_csv_line": 7849,
+      "source_summary_csv_line": 14,
+      "sorted_zero_based_index": 60,
+      "fraction": 0.1,
+      "source_frame_index": 61,
+      "peak_product_saved_norm_times_223": 221.0,
+      "peak_recovery_exactly_integral": true,
+      "roi_json_pointer": "/by_experiment/20000NTU_200/side/height"
+    },
+    {
+      "sample_id": "20000NTU_200_side_300",
+      "source_label_csv_line": 8088,
+      "source_summary_csv_line": 16,
+      "sorted_zero_based_index": 299,
+      "fraction": 0.5,
+      "source_frame_index": 300,
+      "peak_product_saved_norm_times_223": 221.0,
+      "peak_recovery_exactly_integral": true,
+      "roi_json_pointer": "/by_experiment/20000NTU_200/side/height"
+    },
+    {
+      "sample_id": "20000NTU_200_side_539",
+      "source_label_csv_line": 8327,
+      "source_summary_csv_line": 18,
+      "sorted_zero_based_index": 538,
+      "fraction": 0.9,
+      "source_frame_index": 539,
+      "peak_product_saved_norm_times_223": 221.0,
+      "peak_recovery_exactly_integral": true,
+      "roi_json_pointer": "/by_experiment/20000NTU_200/side/height"
+    }
+  ],
+  "preprocessing_sources": [
+    {
+      "role": "effective_transform_definitions",
+      "file": "transforms.py",
+      "sha256": "73f618de96b991a1b50b77b1057dd76eb77055a7444fbbf8b5026405ba3046a9"
+    },
+    {
+      "role": "view_RGB_and_transform_wiring",
+      "file": "dataset.py",
+      "sha256": "68a07cacd5f4ffeee4e4435d20343ab52c19d522d314d650c5bed030f0b89af4"
+    },
+    {
+      "role": "mainline_configuration",
+      "file": "train_config_mainline_single_output_v1.yaml",
+      "sha256": "ee4eee20efe1e244f2f9afc618ede1e46fc286411700b0a5e08e293c8a12f3b0"
+    }
+  ],
+  "source_software_distribution": "Source-software files identified by these hashes are not included; only selected verification scripts and necessary processed records are distributed.",
+  "reference_types": {
+    "historical_split_metrics": "Copied from archived stage1_best_metrics.json; validation/test float32 anchors.",
+    "archived_table_metrics": "Archived figure-source summary table and group summary outputs; distinct group-MAPE convention preserved.",
+    "new_frozen_metrics": "Binary64 recomputation of exported inputs for release consistency, not independent historical measurements.",
+    "attention_aggregate_reference": "Copied from the earlier saved-coordinate verification result, with per-sample saved source distances also retained."
+  }
+}

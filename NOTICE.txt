@@ -1,0 +1,20 @@
+Selected research-verification materials — version 1.0.0
+
+This prepared archive has a deliberately limited scope. It contains selected
+result-verification scripts, processed inputs, parameter descriptions and
+reference values. It does not contain the core prediction software, training
+implementation, trained weights or software-registration documents.
+
+The verification scripts are organized from the reported calculations and
+archived evaluation conventions. The necessary metric definitions overlap
+with evaluation rules in the broader software; no claim of zero overlap or
+new independent ownership is made.
+
+No project-wide open-source license, transfer of ownership, or license to
+excluded software assets is made by this notice. Any distribution and reuse
+terms for this selected archive must be specified by the actual rights
+holders. Contact the corresponding author identified in the accompanying
+article for permission or licensing questions.
+
+No third-party source libraries or model weights are redistributed here.
+Python's standard library is sufficient for the verification scripts.

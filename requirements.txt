@@ -1,0 +1,2 @@
+# Python >= 3.9. All verification scripts use the standard library only.
+# No pip installation, GPU, PyTorch, torchvision, or model checkpoint is needed.
